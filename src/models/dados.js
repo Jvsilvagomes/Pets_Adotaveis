@@ -89,3 +89,5 @@ const pets = [
         disponivel: true
     }
 ]
+
+export default { pets }
