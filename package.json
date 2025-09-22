@@ -1,0 +1,23 @@
+{
+  "name": "pet_adotaveis",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cls && nodemon server.js"
+  },
+  "keywords": [
+    "Senai",
+    "BackEnd",
+    "Estudo"
+  ],
+  "author": "João Victor",
+  "license": "MIT",
+  "description": "Uma API com CRUD completo com o objetivo de revisar e estudar para uma avialiação do curso tecnico",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
