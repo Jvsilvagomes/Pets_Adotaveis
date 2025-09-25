@@ -28,4 +28,60 @@ const getPetsById = (req,res) => {
     })
 }
 
-export  { getAllPets, getPetsById }
+const  createPet = (req,res) => {
+    const { nome, especie, raca, idade, peso, disponivel } = req.body
+     
+    if(idade  < 0.2){
+        return res.status(400).json({
+            success:false,
+            message: `O campo ${idade} deve ser maior que 0.2`
+        })
+    }
+        
+    if(peso <= 0){
+        return res.status(400).json({
+            success: false,
+            message: `O campo ${peso} deve ser maior que 0` 
+        })
+    }
+
+    if (!nome){
+        return res.status(400).json({
+            success: false,
+            message: `O campo ${nome} é obrigatório`
+        })
+    }
+
+    if(!especie){
+        return res.status(400).json({
+            success: false,
+            message: `O campo ${especie} é obrigatório para um pet` 
+        })
+    }
+    if(!raca){
+        return res.status(400).json({
+            success: false,
+            message: `O campo ${raca} é obrigatório para um pet` 
+        })
+    }
+    const novoPet = {
+        id: pets.length + 1,
+        nome: nome,
+        idade,
+        especie,
+        raca,
+        peso,
+        idade,
+        disponivel
+    }
+    
+    pets.push(novoPet);
+
+    res.status(200).json({
+        success: true,
+        message: `Novo pet criado com sucesso`,
+        data: novoPet
+    })
+}
+
+export  { getAllPets, getPetsById, createPet }
