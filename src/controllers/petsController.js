@@ -84,4 +84,37 @@ const  createPet = (req,res) => {
     })
 }
 
-export  { getAllPets, getPetsById, createPet }
+const deletePet = (req,res) => {
+    const { id } = req.params
+
+    if (isNaN(id)){
+        return res.status(400).json({
+            success: false,
+            message: "O id deve ser válido!"
+        });
+    }
+
+    const idParaApagar = parseInt(id);
+
+    const petParaRemover  = pets.find(p => p.id === idParaApagar);
+    //console.log(petParaRemover)
+
+    if (!petParaRemover){
+        return res.status(404).json({
+            success: false,
+            message: "pet id não existe"
+        });
+    }
+
+    const petFiltrado = pets.filter(p => p.id !== id);
+    //console.log(petFiltrado)
+
+    pets.splice(0, pets.length, ...petFiltrado)
+
+    return res.status(200).json({
+        success: true,
+        message: "Pet apagado com sucesso!"
+    })
+}
+
+export  { getAllPets, getPetsById, createPet, deletePet}
