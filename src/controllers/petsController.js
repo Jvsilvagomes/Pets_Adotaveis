@@ -171,5 +171,20 @@ const updatePet = (req, res) => {
 
 }
 
+const adotarPet = (req, res) => {
+    const { id } = req.params;
+    const pet = dados.find(p => p.id == id);
 
-export  { getAllPets, getPetsById, createPet, deletePet, updatePet}
+    if (!pet) {
+        return res.status(404).json({ erro: "Pet não encontrado." });
+    }
+
+    if (!pet.disponivel) {
+        return res.status(400).json({ erro: "Este pet já foi adotado." });
+    }
+
+    pet.disponivel = false;
+    return res.json({ mensagem: `Parabéns! Você adotou o ${pet.nome}.`, pet });
+}
+
+export  { getAllPets, getPetsById, createPet, deletePet, updatePet, adotarPet}
