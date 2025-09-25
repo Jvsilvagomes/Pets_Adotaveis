@@ -117,4 +117,59 @@ const deletePet = (req,res) => {
     })
 }
 
-export  { getAllPets, getPetsById, createPet, deletePet}
+const updatePet = (req, res) => {
+    const id = parseInt(req.params.id);
+     const { nome, especie, raca, idade, peso, disponivel } = req.body
+
+    if (isNaN(id)) {
+        return res.status(400).json({
+            success: false,
+            message: "O id deve ser válido"
+        });
+    }
+
+    const petExiste = pets.find(p => p.id === id);
+
+    if (!petExiste) {
+        return res.status(404).json({
+            success: false,
+            message: "pet não existe"
+        });
+    }
+
+    //Regras de negocio
+    if (idade < 0.2){
+        return res.status(400).json({
+            success: false,
+            message: "A idade deve ser superior a 0.2"
+        })
+    }
+
+    const petsAtualizados = pets.map(pet =>
+        pet.id === id
+            ? {
+                ...pet,
+                ...(nome && { nome }),
+                ...(idade && { idade }),
+                ...(especie && { especie }),
+                ...(raca && { raca }),
+                ...(peso && { serie }),
+                ...(disponivel && { disponivel })
+            }
+            : pet
+    );
+
+    pets.splice(0, pets.length, ...petsAtualizados);
+
+    const petAtualizado = pets.find(p => p.id === id);
+
+    res.status(200).json({
+        success: true,
+        message: "pets atualizado com sucesso",
+        monstro: petAtualizado
+    })
+
+}
+
+
+export  { getAllPets, getPetsById, createPet, deletePet, updatePet}
